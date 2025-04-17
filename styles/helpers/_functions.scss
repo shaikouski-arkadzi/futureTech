@@ -17,7 +17,10 @@
   $maxWidth: math.div($maxViewportWidth, 16);
   $minWidth: math.div($minViewportWidth, 16);
 
+  // slope показывает, насколько быстро значение меняется в зависимости от ширины экрана.
+  // каждые 1rem ширины экрана показатель будет меняться на это значение
   $slope: math.div(($maxSize - $minSize), ($maxWidth - $minWidth));
+  // подгоняем сдвиг исходя из минимальных значений
   $yAxisIntersection: -$minWidth * $slope + $minSize;
 
   @return clamp(
