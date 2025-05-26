@@ -1,0 +1,10 @@
+@use "../helpers" as *;
+
+.feedback-form {
+  display: grid;
+  gap: fluid(50, 20) rem(50);
+
+  @include mobile-s-above {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

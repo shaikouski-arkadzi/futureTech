@@ -256,7 +256,49 @@
                     </div>
                   </div>
                 </div>
-                <div class="card__body"></div>
+                <div class="card__body">
+                  <form class="feedback-form" action="/">
+                    <div class="feedback-form__cell field">
+                      <label class="field__label" for="firstName">
+                        First Name
+                        <span class="field__required-star" aria-hidden="true">
+                          *
+                        </span>
+                      </label>
+                      <input
+                        class="field__control"
+                        id="firstName"
+                        placeholder="Ivan"
+                        required
+                      />
+                    </div>
+                    <div class="feedback-form__cell field">
+                      <label class="field__label" for="lastName">
+                        Last Name
+                      </label>
+                      <input
+                        class="field__control"
+                        id="lastName"
+                        placeholder="Ivanov"
+                      />
+                    </div>
+                    <div class="feedback-form__cell field">
+                      <label class="field__label" for="email">
+                        Email
+                        <span class="field__required-star" aria-hidden="true">
+                          *
+                        </span>
+                      </label>
+                      <input
+                        class="field__control"
+                        id="email"
+                        placeholder="example@email.com"
+                        required
+                        type="email"
+                      />
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
             <div class="list__item">
