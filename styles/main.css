@@ -2396,6 +2396,16 @@ button[aria-label]::before {
     font-size: 1rem;
   }
 }
+.field__body {
+  display: flex;
+  column-gap: 1rem;
+  width: 100%;
+}
+@media (width <= 90rem) {
+  .field__body {
+    column-gap: 0.75rem;
+  }
+}
 .field__required-star {
   color: var(--color-red);
 }
