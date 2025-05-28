@@ -7,4 +7,10 @@
   @include mobile-s-above {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  &__cell {
+    &--wide {
+      grid-column: -1 / 1;
+    }
+  }
 }

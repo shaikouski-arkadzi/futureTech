@@ -2380,6 +2380,9 @@ button[aria-label]::before {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+.feedback-form__cell--wide {
+  grid-column: -1/1;
+}
 
 .field {
   display: flex;
@@ -2439,6 +2442,21 @@ button[aria-label]::before {
 }
 .field__control::placeholder {
   color: var(--color-dark-40);
+}
+.field textarea.field__control {
+  resize: vertical;
+  min-height: 10.1875rem;
+  padding-block: 1.25rem;
+}
+@media (width <= 90rem) {
+  .field textarea.field__control {
+    padding-block: 1rem;
+  }
+}
+@media (width <= 47.9375rem) {
+  .field textarea.field__control {
+    min-height: 7.9375rem;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

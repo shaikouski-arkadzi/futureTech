@@ -52,4 +52,18 @@
       color: var(--color-dark-40);
     }
   }
+
+  textarea.field__control {
+    resize: vertical;
+    min-height: rem(163);
+    padding-block: rem(20);
+
+    @include laptop {
+      padding-block: rem(16);
+    }
+
+    @include mobile {
+      min-height: rem(127);
+    }
+  }
 }
