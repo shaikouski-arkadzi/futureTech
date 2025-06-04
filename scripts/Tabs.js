@@ -1,6 +1,8 @@
+import BaseComponent from "./BaseComponent.js";
+
 const rootSelector = "[data-js-tabs]";
 
-class Tabs {
+class Tabs extends BaseComponent {
   selectors = {
     root: rootSelector,
     button: "[data-js-tabs-button]",
@@ -17,6 +19,7 @@ class Tabs {
   };
 
   constructor(rootElement) {
+    super();
     this.rootElement = rootElement;
     this.buttonElements = this.rootElement.querySelectorAll(
       this.selectors.button
@@ -31,27 +34,6 @@ class Tabs {
     });
     this.limitTabsIndex = this.buttonElements.length - 1;
     this.bindEvents();
-  }
-
-  // Automatically update the UI (by calling this.updateUI()) whenever activeTabIndex changes
-  // Like useEffect in React
-  getProxyState(initialState) {
-    return new Proxy(initialState, {
-      get: (target, prop) => {
-        return target[prop];
-      },
-      set: (target, prop, newValue) => {
-        const oldValue = target[prop];
-
-        target[prop] = newValue;
-
-        if (newValue !== oldValue) {
-          this.updateUI();
-        }
-
-        return true;
-      },
-    });
   }
 
   updateUI() {
@@ -115,7 +97,6 @@ class Tabs {
 
   onKeyDown = (event) => {
     const { code, metaKey } = event;
-    console.log(code);
 
     const action = {
       ArrowLeft: this.previousTab,
