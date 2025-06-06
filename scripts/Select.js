@@ -50,6 +50,28 @@ class Select extends BaseComponent {
       selectedOptionElement:
         this.optionElements[this.originalControlElement.selectedIndex],
     });
+    this.fixDropdownPosition();
+  }
+
+  updateUI() {}
+
+  //Function to determine the dropdown position along the X-axis
+  fixDropdownPosition() {
+    const viewportWidth = document.documentElement.clientWidth;
+    const halfViewportX = viewportWidth / 2;
+    const { width, x } = this.buttonElement.getBoundingClientRect();
+    const buttonCenterX = x + width / 2;
+    const isButtonOnTheLeftViewportSide = buttonCenterX < halfViewportX;
+
+    this.dropdownElement.classList.toggle(
+      this.stateClasses.isOnTheLeftSide,
+      isButtonOnTheLeftViewportSide
+    );
+
+    this.dropdownElement.classList.toggle(
+      this.stateClasses.isOnTheRightSide,
+      !isButtonOnTheLeftViewportSide
+    );
   }
 }
 
