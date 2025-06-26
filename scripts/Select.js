@@ -1,4 +1,5 @@
 import BaseComponent from "./BaseComponent.js";
+import MatchMedia from "./MatchMedia.js";
 
 const rootSelector = "[data-js-select]";
 
@@ -51,6 +52,8 @@ class Select extends BaseComponent {
         this.optionElements[this.originalControlElement.selectedIndex],
     });
     this.fixDropdownPosition();
+    this.updateTabIndexes();
+    this.bindEvents();
   }
 
   updateUI() {}
@@ -72,6 +75,21 @@ class Select extends BaseComponent {
       this.stateClasses.isOnTheRightSide,
       !isButtonOnTheLeftViewportSide
     );
+  }
+
+  // On mobile devices, show native select; on desktop — custom
+  // Change tabIndex to activate the correct select for Tab navigation based on screen size
+  updateTabIndexes(isMobileDevice = MatchMedia.mobile.matches) {
+    this.originalControlElement.tabIndex = isMobileDevice ? 0 : -1;
+    this.buttonElement.tabIndex = isMobileDevice ? -1 : 0;
+  }
+
+  onMobileMatchMediaChange = (event) => {
+    this.updateTabIndexes(event.matches);
+  };
+
+  bindEvents() {
+    MatchMedia.mobile.addEventListener("change", this.onMobileMatchMediaChange);
   }
 }
 
