@@ -56,7 +56,46 @@ class Select extends BaseComponent {
     this.bindEvents();
   }
 
-  updateUI() {}
+  updateUI() {
+    const { isExpanded, selectedOptionElement, currentOptionIndex } =
+      this.state;
+
+    const updateOriginalControl = () => {
+      this.originalControlElement.value =
+        selectedOptionElement.textContent.trim();
+    };
+
+    const updateButton = () => {
+      this.buttonElement.textContent = selectedOptionElement.textContent.trim();
+      this.buttonElement.classList.toggle(
+        this.stateClasses.isExpanded,
+        isExpanded
+      );
+      this.buttonElement.setAttribute(
+        this.stateAttributes.ariaExpanded,
+        isExpanded
+      );
+      this.buttonElement.setAttribute(
+        this.stateAttributes.ariaActiveDescendant,
+        this.optionElements[currentOptionIndex].id
+      );
+    };
+
+    const updateDropdown = () => {
+      this.dropdownElement.classList.toggle(
+        this.stateClasses.isExpanded,
+        isExpanded
+      );
+    };
+
+    updateOriginalControl();
+    updateButton();
+    updateDropdown();
+  }
+
+  toggleExpandedState() {
+    this.state.isExpanded = !this.state.isExpanded;
+  }
 
   //Function to determine the dropdown position along the X-axis
   fixDropdownPosition() {
@@ -84,12 +123,17 @@ class Select extends BaseComponent {
     this.buttonElement.tabIndex = isMobileDevice ? -1 : 0;
   }
 
+  onButtonClick = () => {
+    this.toggleExpandedState();
+  };
+
   onMobileMatchMediaChange = (event) => {
     this.updateTabIndexes(event.matches);
   };
 
   bindEvents() {
     MatchMedia.mobile.addEventListener("change", this.onMobileMatchMediaChange);
+    this.buttonElement.addEventListener("click", this.onButtonClick);
   }
 }
 
