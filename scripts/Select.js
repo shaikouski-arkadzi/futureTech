@@ -88,9 +88,27 @@ class Select extends BaseComponent {
       );
     };
 
+    const updateOptions = () => {
+      this.optionElements.forEach((optionElement, index) => {
+        const isCurrent = currentOptionIndex === index;
+        const isSelected = selectedOptionElement === optionElement;
+
+        optionElement.classList.toggle(this.stateClasses.isCurrent, isCurrent);
+        optionElement.classList.toggle(
+          this.stateClasses.isSelected,
+          isSelected
+        );
+        optionElement.setAttribute(
+          this.stateAttributes.ariaSelected,
+          isSelected
+        );
+      });
+    };
+
     updateOriginalControl();
     updateButton();
     updateDropdown();
+    updateOptions();
   }
 
   toggleExpandedState() {
