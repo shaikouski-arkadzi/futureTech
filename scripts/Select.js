@@ -115,6 +115,10 @@ class Select extends BaseComponent {
     this.state.isExpanded = !this.state.isExpanded;
   }
 
+  collapse() {
+    this.state.isExpanded = false;
+  }
+
   //Function to determine the dropdown position along the X-axis
   fixDropdownPosition() {
     const viewportWidth = document.documentElement.clientWidth;
@@ -145,6 +149,19 @@ class Select extends BaseComponent {
     this.toggleExpandedState();
   };
 
+  onClick = (event) => {
+    const { target } = event;
+
+    const isButtonClick = target === this.buttonElement;
+    const isOutsideDropdownClick =
+      target.closest(this.selectors.dropdown) !== this.dropdownElement;
+
+    if (!isButtonClick && isOutsideDropdownClick) {
+      this.collapse();
+      return;
+    }
+  };
+
   onMobileMatchMediaChange = (event) => {
     this.updateTabIndexes(event.matches);
   };
@@ -152,6 +169,7 @@ class Select extends BaseComponent {
   bindEvents() {
     MatchMedia.mobile.addEventListener("change", this.onMobileMatchMediaChange);
     this.buttonElement.addEventListener("click", this.onButtonClick);
+    document.addEventListener("click", this.onClick);
   }
 }
 
