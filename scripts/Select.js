@@ -160,6 +160,14 @@ class Select extends BaseComponent {
       this.collapse();
       return;
     }
+
+    if (target.matches(this.selectors.option)) {
+      this.state.selectedOptionElement = target;
+      this.state.currentOptionIndex = [...this.optionElements].findIndex(
+        (optionElement) => optionElement === target
+      );
+      this.collapse();
+    }
   };
 
   onMobileMatchMediaChange = (event) => {
