@@ -115,6 +115,10 @@ class Select extends BaseComponent {
     this.state.isExpanded = !this.state.isExpanded;
   }
 
+  expand() {
+    this.state.isExpanded = true;
+  }
+
   collapse() {
     this.state.isExpanded = false;
   }
@@ -145,6 +149,17 @@ class Select extends BaseComponent {
     this.buttonElement.tabIndex = isMobileDevice ? -1 : 0;
   }
 
+  get isNeedToExpand() {
+    const isButtonFocused = document.activeElement === this.buttonElement;
+
+    return !this.state.isExpanded && isButtonFocused;
+  }
+
+  selectCurrentOption() {
+    this.state.selectedOptionElement =
+      this.optionElements[this.state.currentOptionIndex];
+  }
+
   onButtonClick = () => {
     this.toggleExpandedState();
   };
@@ -170,6 +185,66 @@ class Select extends BaseComponent {
     }
   };
 
+  onArrowUpKeyDown = () => {
+    if (this.isNeedToExpand) {
+      this.expand();
+      return;
+    }
+
+    if (this.state.currentOptionIndex > 0) {
+      this.state.currentOptionIndex--;
+    }
+  };
+
+  onArrowDownKeyDown = () => {
+    if (this.isNeedToExpand) {
+      this.expand();
+      return;
+    }
+
+    if (this.state.currentOptionIndex < this.optionElements.length - 1) {
+      this.state.currentOptionIndex++;
+    }
+  };
+
+  onSpaceKeyDown = () => {
+    if (this.isNeedToExpand) {
+      this.expand();
+      return;
+    }
+
+    this.selectCurrentOption();
+    this.collapse();
+  };
+
+  onEnterKeyDown = () => {
+    if (this.isNeedToExpand) {
+      this.expand();
+      return;
+    }
+
+    this.selectCurrentOption();
+    this.collapse();
+  };
+
+  onKeyDown = (event) => {
+    const { code } = event;
+
+    // если code будет равен ArrowUp, ArrowDown, Space или Enter, то вызовется соответсвенно action будет содержать
+    // this.onArrowUpKeyDown,this.onArrowDownKeyDown,this.onSpaceKeyDown или this.onEnterKeyDown
+    const action = {
+      ArrowUp: this.onArrowUpKeyDown,
+      ArrowDown: this.onArrowDownKeyDown,
+      Space: this.onSpaceKeyDown,
+      Enter: this.onEnterKeyDown,
+    }[code];
+
+    if (action) {
+      event.preventDefault();
+      action();
+    }
+  };
+
   onMobileMatchMediaChange = (event) => {
     this.updateTabIndexes(event.matches);
   };
@@ -178,6 +253,7 @@ class Select extends BaseComponent {
     MatchMedia.mobile.addEventListener("change", this.onMobileMatchMediaChange);
     this.buttonElement.addEventListener("click", this.onButtonClick);
     document.addEventListener("click", this.onClick);
+    this.rootElement.addEventListener("keydown", this.onKeyDown);
   }
 }
 
